@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#08a9ef">
-  <meta name="description" content="Slowly drifting pixel clouds, bright blue skies, and delicate checkerboard edges. A background motion study.">
-  <title>Pixel Clouds — Background Motion</title>
+  <meta name="description" content="Drifting pixel clouds and a layered parallax transition from a title slide to the next slide.">
+  <title>Pixel Clouds — Slide Motion</title>
   <style>
     * { box-sizing: border-box; }
     html, body { width:100%; height:100%; margin:0; overflow:hidden; background:#fff; }
     body { font:13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:#152330; }
-    canvas { position:fixed; inset:0; width:100%; height:100%; }
+    canvas { position:fixed; inset:0; width:100%; height:100%; touch-action:none; }
     .controls { position:fixed; bottom:22px; right:22px; display:flex; gap:6px; z-index:2; }
     button { cursor:pointer; color:inherit; border:1px solid #17293814; background:#fffffff0; border-radius:24px; min-height:40px; padding:0 14px; font:inherit; box-shadow:0 2px 12px #162b3610; }
     button:hover { background:#fff; border-color:#15233055; }
@@ -25,24 +25,34 @@
     input[type=range] { width:100%; accent-color:#08a9ef; margin:10px 0 20px; cursor:pointer; }
     input[type=checkbox] { accent-color:#08a9ef; width:16px; height:16px; }
     .reset { margin-top:18px; min-height:32px; padding:0 11px; font-size:12px; box-shadow:none; }
+    .hint { color:#587080; font-size:12px; margin:14px 0 0; line-height:1.5; }
+    .panel { max-height:calc(100dvh - 100px); overflow-y:auto; }
+    .slide-indicator { position:fixed; bottom:31px; left:24px; z-index:2; font-size:12px; color:#152330; background:#ffffffdc; padding:5px 10px; border-radius:18px; }
+    .slide-indicator span { color:#587080; margin-right:8px; font-variant-numeric:tabular-nums; }
+    @media(max-width:500px) { .slide-indicator { bottom:auto; top:16px; left:16px; } }
     .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
     @media(max-width:500px) { .controls { right:16px; bottom:16px; } .panel { right:16px; bottom:70px; } }
   </style>
 </head>
 <body>
   <canvas id="clouds" aria-hidden="true"></canvas>
-  <p class="sr-only">A blue and white animated pixel cloud background. Use the controls to pause or adjust its motion.</p>
+  <p class="sr-only">A two-slide background study. Advance with the next slide button, arrow keys, scrolling, or a swipe. Use the controls to pause or adjust the motion.</p>
+  <div class="slide-indicator" id="slideIndicator" aria-live="polite"><span>01 / 02</span>Title slide</div>
   <section class="panel" id="panel" aria-label="Background settings" hidden>
     <h1>Pixel clouds</h1>
     <label for="speed">Drift speed <output id="speedValue">1×</output></label>
-    <input id="speed" type="range" min="0.2" max="2" step="0.1" value="1">
+    <input id="speed" type="range" min="0.2" max="5" step="0.1" value="1">
     <label for="size">Pixel size <output id="sizeValue">22</output></label>
     <input id="size" type="range" min="10" max="38" step="2" value="22">
+    <label for="depth">Parallax <output id="depthValue">60%</output></label>
+    <input id="depth" type="range" min="0" max="100" step="5" value="60">
     <label for="center">Open white center <input id="center" type="checkbox" checked></label>
+    <p class="hint">Scroll, swipe, or use the arrow keys to change slides. Parallax controls the depth of that transition.</p>
     <button class="reset" id="reset" type="button">Reset</button>
   </section>
   <div class="controls">
-    <button id="pause" type="button" aria-label="Pause animation" title="Pause animation"></button>
+    <button id="advance" type="button">Next slide →</button>
+    <button id="pause" type="button" aria-label="Pause drift" title="Pause drift"></button>
     <button id="adjust" type="button" aria-controls="panel" aria-expanded="false">Adjust</button>
   </div>
   <script>
@@ -52,11 +62,14 @@
     const ctx = canvas.getContext('2d', { alpha:false });
     const $ = id => document.getElementById(id);
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-    const settings = { speed:1, size:22, center:true };
+    const settings = { speed:1, size:22, depth:60, center:true };
     const palette = { blue:'#08a9ef', pale:'#7bcaff', white:'#ffffff' };
     let running = !reducedMotion.matches, time = 18, last = 0, rendered = 0;
-    let width = 0, height = 0, dpr = 1, cell = 22, cols = 0, rows = 0;
-    let mask = [], fills = [], frameRequest = null;
+    let width = 0, height = 0, dpr = 1, cell = 22;
+    const sky=document.createElement('canvas'), foreground=document.createElement('canvas'), nextForeground=document.createElement('canvas');
+    const skyCtx=sky.getContext('2d',{alpha:false}), foregroundCtx=foreground.getContext('2d'), nextCtx=nextForeground.getContext('2d');
+    let progress=0, targetSlide=0, transition=null;
+    let fills = [], frameRequest = null, bleed = 0, surfaceCols = 0, surfaceRows = 0, skyRows = 0;
 
     // Seeded gradient noise gives the clouds continuous motion without a loop seam.
     let seed = 7391;
@@ -86,67 +99,136 @@
       width=innerWidth; height=innerHeight; dpr=Math.min(devicePixelRatio||1,2);
       canvas.width=Math.round(width*dpr); canvas.height=Math.round(height*dpr);
       cell=Math.max(8,Math.round(settings.size*Math.min(width/1708,height/1024)));
-      cols=Math.ceil(width/cell); rows=Math.ceil(height/cell);
       fills=[palette.blue,checker(palette.blue,palette.pale),palette.pale,checker(palette.pale,palette.white),palette.white];
-      mask=new Float32Array(cols*rows);
-      for(let y=0;y<rows;y++) for(let x=0;x<cols;x++) {
-        const nx=(x+.5)*cell/width, ny=(y+.5)*cell/height;
+      // Overscan both layers so movement never exposes an empty edge.
+      bleed=Math.ceil(110/cell)*cell;
+      surfaceCols=Math.ceil((width+bleed*2)/cell);
+      surfaceRows=Math.ceil((height+bleed*2)/cell);
+      skyRows=Math.ceil((height*2+bleed*2)/cell);
+      sky.width=foreground.width=nextForeground.width=Math.ceil(surfaceCols*cell*dpr);
+      foreground.height=nextForeground.height=Math.ceil(surfaceRows*cell*dpr);
+      sky.height=Math.ceil(skyRows*cell*dpr);
+      for(let y=0;y<surfaceRows;y++) for(let x=0;x<surfaceCols;x++) {
+        const nx=((x+.5)*cell-bleed)/width, ny=((y+.5)*cell-bleed)/height;
         // A gently irregular, quiet opening in the center, sampled on a finer grid.
         const dx=(nx-.5)/.405,dy=(ny-.48)/.255;
         const edge=Math.pow(Math.pow(Math.abs(dx),4)+Math.pow(Math.abs(dy),4),.25);
         const rough=noise(nx*13+8,ny*13+4,2.7)*.11 + noise(nx*31,ny*31,1.3)*.025;
-        mask[y*cols+x]=1.12-edge+rough;
+        const m=1.12-edge+rough;
+        const level=m>.08?4:m>.025?3:m>-.025?2:m>-.085?1:0;
+        if(level>0) {
+          foregroundCtx.fillStyle=fills[level];
+          paintCell(foregroundCtx,x,y);
+        }
+        // The following slide is a quieter content field, with sky at its right edge.
+        const nextEdge=noise(nx*15+3,ny*12+8,1.9)*.08;
+        const nextM=Math.min((.88-nx)*4,(.96-ny)*5,ny*12)+nextEdge;
+        const nextLevel=nextM>.08?4:nextM>.025?3:nextM>-.025?2:nextM>-.085?1:0;
+        if(nextLevel>0) { nextCtx.fillStyle=fills[nextLevel]; paintCell(nextCtx,x,y); }
       }
       draw();
     }
+    function paintCell(context,x,y) {
+      const left=Math.round(x*cell*dpr),top=Math.round(y*cell*dpr);
+      context.fillRect(left,top,Math.round((x+1)*cell*dpr)-left,Math.round((y+1)*cell*dpr)-top);
+    }
     function draw() {
-      const coarseCols=Math.ceil(cols/3),coarseRows=Math.ceil(rows/3);
-      const field=new Float32Array(coarseCols*coarseRows);
+      const coarseCols=Math.ceil(surfaceCols/3),coarseRows=Math.ceil(skyRows/3);
       for(let y=0;y<coarseRows;y++) for(let x=0;x<coarseCols;x++) {
-        const nx=(x*3+1.5)*cell/width,ny=(y*3+1.5)*cell/height;
+        const nx=((x*3+1.5)*cell-bleed)/width,ny=((y*3+1.5)*cell-bleed)/height;
         const sx=nx*3.5+time*.023,sy=ny*2.8+time*.006;
         const n=noise(sx+4.8,sy+8.1,time*.009)*.79 + noise(sx*2.1+18,sy*2.1-7,time*.014)*.17 + noise(sx*4.2,sy*4.2,time*.019)*.04;
-        field[y*coarseCols+x]=n;
+        const level=n<-.10?0:n<-.025?1:n<.075?2:n<.15?3:4;
+        skyCtx.fillStyle=fills[level];
+        const left=Math.round(x*3*cell*dpr),top=Math.round(y*3*cell*dpr);
+        skyCtx.fillRect(left,top,Math.round((x+1)*3*cell*dpr)-left,Math.round((y+1)*3*cell*dpr)-top);
       }
-      for(let y=0;y<rows;y++) for(let x=0;x<cols;x++) {
-        const n=field[Math.floor(y/3)*coarseCols+Math.floor(x/3)];
-        let level=n<-.10?0:n<-.025?1:n<.075?2:n<.15?3:4;
-        if(settings.center) {
-          const m=mask[y*cols+x];
-          const centerLevel=m>.08?4:m>.025?3:m>-.025?2:m>-.085?1:0;
-          level=Math.max(level,centerLevel);
-        }
-        ctx.fillStyle=fills[level];
-        const left=Math.round(x*cell*dpr),top=Math.round(y*cell*dpr);
-        ctx.fillRect(left,top,Math.round((x+1)*cell*dpr)-left,Math.round((y+1)*cell*dpr)-top);
+      composite();
+    }
+    function composite() {
+      // The sky travels behind two foreground planes during a slide change.
+      // At zero depth the layers travel together; more depth slows the distant sky.
+      const skyTravel=height*(1-.82*settings.depth/100);
+      ctx.globalCompositeOperation='source-over';
+      ctx.drawImage(sky,Math.round(-bleed*dpr),Math.round((-bleed-progress*skyTravel)*dpr));
+      if(settings.center) {
+        ctx.globalCompositeOperation='lighten';
+        if(progress<1) ctx.drawImage(foreground,Math.round(-bleed*dpr),Math.round((-bleed-progress*height)*dpr));
+        if(progress>0) ctx.drawImage(nextForeground,Math.round(-bleed*dpr),Math.round((-bleed+(1-progress)*height)*dpr));
+        ctx.globalCompositeOperation='source-over';
       }
     }
     function tick(now) {
       frameRequest=null;
-      if(!running||document.hidden) { last=0; return; }
-      if(last) time+=Math.min((now-last)/1000,.1)*settings.speed;
+      if(document.hidden||(!running&&!transition)) { last=0; return; }
+      const dt=last?Math.min((now-last)/1000,.1):0;
+      if(running) time+=dt*settings.speed;
+      if(transition) {
+        transition.elapsed+=dt;
+        const t=Math.min(1,transition.elapsed/1.2);
+        const eased=t*t*t*(t*(t*6-15)+10);
+        progress=mix(transition.from,targetSlide,eased);
+        if(t===1) { progress=targetSlide; transition=null; }
+      }
       last=now;
       if(now-rendered>=1000/30) { draw(); rendered=now; }
-      frameRequest=requestAnimationFrame(tick);
+      else composite();
+      schedule();
     }
-    function schedule() { if(running&&!document.hidden&&frameRequest===null) frameRequest=requestAnimationFrame(tick); }
+    function schedule() { if((running||transition)&&!document.hidden&&frameRequest===null) frameRequest=requestAnimationFrame(tick); }
+    function goToSlide(slide) {
+      slide=Math.max(0,Math.min(1,slide));
+      if(slide===targetSlide) return;
+      targetSlide=slide;
+      $('slideIndicator').innerHTML=slide?'<span>02 / 02</span>Next slide':'<span>01 / 02</span>Title slide';
+      $('advance').textContent=slide?'← Title slide':'Next slide →';
+      if(reducedMotion.matches) { progress=slide; transition=null; composite(); }
+      else { transition={from:progress,elapsed:0}; last=0; schedule(); }
+    }
     function setRunning(value) {
       running=value; last=0;
-      const label=running?'Pause animation':'Play animation';
+      const label=running?'Pause drift':'Play drift';
       $('pause').setAttribute('aria-label',label); $('pause').title=label;
       $('pause').innerHTML=running?'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h3v12H4zm5 0h3v12H9z"/></svg>':'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg>';
       if(!running&&frameRequest!==null) { cancelAnimationFrame(frameRequest); frameRequest=null; }
       schedule();
     }
     $('pause').addEventListener('click',()=>setRunning(!running));
+    $('advance').addEventListener('click',()=>goToSlide(1-targetSlide));
     $('adjust').addEventListener('click',()=>{ const open=$('panel').hidden; $('panel').hidden=!open; $('adjust').setAttribute('aria-expanded',String(open)); });
     $('speed').addEventListener('input',e=>{ settings.speed=Number(e.target.value); $('speedValue').textContent=settings.speed+'×'; });
     $('size').addEventListener('input',e=>{ settings.size=Number(e.target.value); $('sizeValue').textContent=settings.size; resize(); });
+    $('depth').addEventListener('input',e=>{ settings.depth=Number(e.target.value); $('depthValue').textContent=settings.depth+'%'; composite(); });
     $('center').addEventListener('change',e=>{ settings.center=e.target.checked; draw(); });
-    $('reset').addEventListener('click',()=>{ Object.assign(settings,{speed:1,size:22,center:true}); $('speed').value=1; $('size').value=22; $('center').checked=true; $('speedValue').textContent='1×'; $('sizeValue').textContent='22'; time=18; resize(); });
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape') { $('panel').hidden=true; $('adjust').setAttribute('aria-expanded','false'); $('adjust').focus(); } });
+    $('reset').addEventListener('click',()=>{ Object.assign(settings,{speed:1,size:22,depth:60,center:true}); $('speed').value=1; $('size').value=22; $('depth').value=60; $('center').checked=true; $('speedValue').textContent='1×'; $('sizeValue').textContent='22'; $('depthValue').textContent='60%'; time=18; resize(); });
+    let wheelAmount=0,wheelLast=0,wheelLockedUntil=0,touchStart=null;
+    window.addEventListener('wheel',e=>{
+      if(e.target.closest?.('.panel')||e.ctrlKey) return;
+      const now=performance.now();
+      if(now<wheelLockedUntil) return;
+      if(now-wheelLast>180) wheelAmount=0;
+      wheelLast=now;
+      wheelAmount+=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?height:1);
+      if(Math.abs(wheelAmount)>45) { goToSlide(wheelAmount>0?1:0); wheelLockedUntil=now+1300; wheelAmount=0; }
+    },{passive:true});
+    canvas.addEventListener('pointerdown',e=>{ if(e.pointerType!=='mouse') touchStart={x:e.clientX,y:e.clientY}; });
+    window.addEventListener('pointerup',e=>{
+      if(!touchStart) return;
+      const dx=touchStart.x-e.clientX,dy=touchStart.y-e.clientY;
+      const delta=Math.abs(dy)>Math.abs(dx)?dy:dx;
+      if(Math.abs(delta)>45) goToSlide(delta>0?1:0);
+      touchStart=null;
+    });
+    window.addEventListener('pointercancel',()=>{touchStart=null;});
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape') { $('panel').hidden=true; $('adjust').setAttribute('aria-expanded','false'); $('adjust').focus(); return; }
+      if(e.target.closest('input,textarea,select,[contenteditable]')||e.metaKey||e.ctrlKey||e.altKey) return;
+      if(e.key===' '&&e.target.closest('button')) return;
+      if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); goToSlide(1); }
+      if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); goToSlide(0); }
+    });
     document.addEventListener('visibilitychange',()=>{ last=0; schedule(); });
-    reducedMotion.addEventListener('change',e=>setRunning(!e.matches));
+    reducedMotion.addEventListener('change',e=>{ if(e.matches) { progress=targetSlide; transition=null; composite(); } setRunning(!e.matches); });
     window.addEventListener('resize',resize);
     resize(); setRunning(running);
   })();
