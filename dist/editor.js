@@ -153,6 +153,7 @@
     $('headingInput').value = slide?.content.heading || '';
     $('bodyInput').value = slide?.content.body || '';
     $('sourceInput').value = slide?.content.source || '';
+    $('qrToggle').checked = slide?.content.qr === 'accytutor';
     $('slideBadge').textContent = pad(project.slides.indexOf(slide) + 1);
     $('slideFields').hidden = !hasSlides; $('emptyInspector').hidden = hasSlides;
     $('tab-space').disabled = !hasSlides; $('tab-motion').disabled = !tr;
@@ -261,6 +262,9 @@
     $('sampleContent').hidden = !showSample; $('sampleContent').style.opacity = visibility;
     $('sampleContent').setAttribute('aria-hidden', String(!showSample || visibility < .1));
     const content = contentSlide?.content || {};
+    const hasQr = content.qr === 'accytutor';
+    $('slideContent').classList.toggle('has-qr', hasQr);
+    $('slideQr').hidden = !hasQr;
     const label = content.label || '';
     for (const [id, value] of [['slideLabel', label], ['slideHeading', content.heading], ['slideBody', content.body], ['slideSource', content.source]]) {
       if ($(id).textContent !== (value || '')) $(id).textContent = value || '';
@@ -268,10 +272,12 @@
     }
     // Keep the same type proportions in both wide and tall presentation windows.
     $('slideContent').style.setProperty('--type-unit', Math.min(rect.width, rect.height * 1.6) / 100 + 'px');
-    const authored = !!(label || content.heading || content.body || content.source) && !showSample;
+    const authored = !!(label || content.heading || content.body || content.source || hasQr) && !showSample;
     $('slideContent').hidden = !authored; $('slideContent').style.opacity = visibility;
     $('slideContent').setAttribute('aria-hidden', String(!authored || visibility < .1));
-    $('contentOverflow').hidden = !authored || mode !== 'slide' || $('slideContent').scrollHeight <= $('slideContent').clientHeight + 1;
+    const overflowing = $('slideContent').scrollHeight > $('slideContent').clientHeight + 1
+      || $('slideCopy').scrollHeight > $('slideContent').clientHeight + 1;
+    $('contentOverflow').hidden = !authored || mode !== 'slide' || !overflowing;
   }
   function render() {
     const hasSlides = project.slides.length > 0, tr = transition();
@@ -404,6 +410,9 @@
     });
   });
   $('editTransition').addEventListener('click', () => chooseTransition(selected));
+  $('qrToggle').addEventListener('change', event => {
+    if (activeSlide()) edit(() => { activeSlide().content.qr = event.target.checked ? 'accytutor' : 'none'; });
+  });
   [
     ['presentationName', value => { project.title = value || 'Untitled presentation'; }],
     ['slideName', value => { if (activeSlide()) activeSlide().name = value || 'Untitled slide'; }],

@@ -281,6 +281,22 @@ test('section labels and source credits survive edits and export without affecti
   }
 });
 
+test('the tutoring QR follows its slide and existing decks retain an explicit removal', () => {
+  const starter = require('../dist/starter.js').createProject();
+  const tutor = starter.slides[5];
+  assert.equal(tutor.content.qr, 'accytutor');
+  const copy = M.findSlide(starter, M.duplicateSlide(starter, tutor.id));
+  M.moveSlide(starter, copy.id, -2);
+  assert.equal(copy.content.qr, 'accytutor');
+  assertValidSequence(starter);
+  delete tutor.content.qr;
+  assert.equal(M.findSlide(M.validateProject(starter), tutor.id).content.qr, 'accytutor');
+  tutor.content.qr = 'none';
+  assert.equal(M.findSlide(M.validateProject(starter), tutor.id).content.qr, 'none');
+  tutor.content.qr = 'unknown';
+  assert.throws(() => M.validateProject(starter));
+});
+
 test('texture refinement keeps anchored cell boundaries and matches at shared slide endpoints', () => {
   let calls = [];
   const ctx = { fillStyle: '', fillRect(...args) { calls.push([this.fillStyle, ...args]); }, createPattern: () => 'checker' };

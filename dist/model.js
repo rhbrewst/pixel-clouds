@@ -198,12 +198,17 @@
     };
     const slides = input.slides.map((slide, i) => {
       if (!slide) throw new Error('The project contains an invalid slide.');
+      // Attach the new QR to existing copies of the bundled tutoring slide.
+      // An explicit "none" preserves a later decision to remove it.
+      const qr = slide.content?.qr ?? (slide.id === 'rethink-ai-6' ? 'accytutor' : undefined);
+      if (qr !== undefined && !['none', 'accytutor'].includes(qr)) throw new Error('The QR code is not supported.');
       return {
         id: id(slide.id), name: text(slide.name || (legacy ? 'Slide ' + (i + 1) : ''), 80, false),
         space: readSpace(slide.space),
         content: legacy ? { label: '', heading: '', body: '', source: '' } : {
           label: text(slide.content?.label ?? '', 100), heading: text(slide.content?.heading, 160),
-          body: text(slide.content?.body, 2000), source: text(slide.content?.source ?? '', 500)
+          body: text(slide.content?.body, 2000), source: text(slide.content?.source ?? '', 500),
+          ...(qr === undefined ? {} : { qr })
         }
       };
     });

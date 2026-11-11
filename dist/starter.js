@@ -35,7 +35,7 @@
     },
     {
       name: 'Personal example', label: 'PERSONAL EXAMPLE', heading: 'My Tutoring Platform',
-      body: 'A marketplace connecting students with student tutors.\n\nBuilt with AI-assisted coding.\n\nFrom a concept to a working prototype.', source: '',
+      body: 'A marketplace connecting students with student tutors.\n\nBuilt with AI-assisted coding.\n\nFrom a concept to a working prototype.', source: '', qr: 'accytutor',
       space: { x: 54, y: 50, width: 82, height: 88, rotation: 0 }
     },
     {
@@ -57,7 +57,7 @@
   function createProject() {
     const project = { version: 2, title: 'Rethink AI', slides: slides.map((slide, i) => ({
       id: 'rethink-ai-' + (i + 1), name: slide.name, space: M.clone(slide.space),
-      content: { label: slide.label, heading: slide.heading, body: slide.body, source: slide.source }
+      content: { label: slide.label, heading: slide.heading, body: slide.body, source: slide.source, ...(slide.qr ? { qr: slide.qr } : {}) }
     })), transitions: [] };
     M.reconcileTransitions(project);
     return project;

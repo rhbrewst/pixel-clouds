@@ -27,7 +27,7 @@
 <canvas id="clouds" aria-label="Animated transition preview"></canvas>
 <div id="spaceGuide" class="space-guide"><span class="guide-label">WHITESPACE</span><i class="guide-corner c1"></i><i class="guide-corner c2"></i><i class="guide-corner c3"></i><i class="guide-corner c4"></i><span class="guide-center" aria-hidden="true">+</span></div>
 <div id="safeGuide" class="safe-guide"><span>CONTENT SAFE AREA</span></div><div id="sampleContent" class="sample-content" hidden></div>
-<div id="slideContent" class="sample-content authored-content" hidden><p id="slideLabel" class="slide-label"></p><h4 id="slideHeading"></h4><p id="slideBody"></p><p id="slideSource" class="slide-source"></p></div>
+<div id="slideContent" class="sample-content authored-content" hidden><div id="slideCopy" class="slide-copy"><p id="slideLabel" class="slide-label"></p><h4 id="slideHeading"></h4><p id="slideBody"></p><p id="slideSource" class="slide-source"></p></div><figure id="slideQr" class="slide-qr" hidden><a href="https://accytutor.com" target="_blank" rel="noopener noreferrer" aria-label="Open AccyTutor"><img src="assets/accytutor-qr.svg" width="370" height="370" alt="QR code to https://accytutor.com" draggable="false"></a><figcaption><span class="qr-pixels" aria-hidden="true"><i></i><i></i><i></i></span>accytutor.com</figcaption></figure></div>
 <div id="emptyStage" class="empty-stage" hidden><span class="empty-icon" aria-hidden="true">＋</span><h3>A little space for your first idea.</h3><p>Add a slide to start your presentation.</p><button id="addFirstSlide" class="button primary">Add first slide</button></div>
 <button id="exitPresent" class="button presentation-exit" hidden>← Back to editor <kbd>Esc</kbd></button>
 <div class="presentation-controls" id="presentationControls" hidden><button id="presentPrevious" class="button">← Previous</button><span id="presentSlideLabel"></span><button id="presentNext" class="button">Next slide →</button></div>
@@ -88,6 +88,7 @@
 <div class="field"><label for="headingInput">Heading <span class="optional">optional</span></label><textarea id="headingInput" rows="2" maxlength="160" placeholder="What’s the big idea?"></textarea></div>
 <div class="field"><label for="bodyInput">Body text <span class="optional">optional</span></label><textarea id="bodyInput" rows="4" maxlength="2000" placeholder="Add a little context…"></textarea></div>
 <div class="field"><label for="sourceInput">Source credit <span class="optional">optional</span></label><textarea id="sourceInput" rows="2" maxlength="500" placeholder="Author, year, publication"></textarea></div>
+<label class="check-field" for="qrToggle"><span>Show AccyTutor QR code</span><input id="qrToggle" type="checkbox"></label>
 <p class="field-help">Text stays upright inside the safe area and appears in Present mode. Leave it empty for a background-only slide.</p>
 <p id="contentOverflow" class="overflow-note" role="status" hidden>Some text exceeds the safe area. Shorten the copy or enlarge the whitespace.</p>
 <div class="inspector-divider"></div>
