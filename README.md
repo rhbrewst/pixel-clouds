@@ -26,6 +26,7 @@ The bundled starter is **Rethink AI**, a nine-slide presentation with the suppli
 - **Delete slide** removes it and updates neighboring transitions. Use the toast's Undo button or the header's undo/redo controls to recover it.
 - Empty and single-slide presentations are supported. The editor supports up to 100 slides.
 - Text stays upright inside the content safe area. The editor flags text that exceeds that area; shorten the copy or enlarge the whitespace.
+- A body containing a single full web address becomes a clickable link that opens in a new tab. Slide 1 links to the supplied YouTube video.
 - The tutoring slide includes a static blue QR code linking to `https://accytutor.com`. It sits beside the text on an opaque white card inside the safe area, separate from the animated canvas. **Show AccyTutor QR code** toggles it; duplication, reordering, and JSON exports keep it attached to the slide.
 - **Present** starts at the first slide. Buttons, arrow keys, scrolling, and touch swipes advance through the current sequence. Escape returns to the editor.
 - The **Layout samples** control previews illustrative title, metric, and chart layouts. These samples do not replace authored text, are not exported, and do not appear in Present mode.

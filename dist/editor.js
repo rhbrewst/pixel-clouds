@@ -266,10 +266,23 @@
     $('slideContent').classList.toggle('has-qr', hasQr);
     $('slideQr').hidden = !hasQr;
     const label = content.label || '';
-    for (const [id, value] of [['slideLabel', label], ['slideHeading', content.heading], ['slideBody', content.body], ['slideSource', content.source]]) {
+    for (const [id, value] of [['slideLabel', label], ['slideHeading', content.heading], ['slideSource', content.source]]) {
       if ($(id).textContent !== (value || '')) $(id).textContent = value || '';
       $(id).hidden = !value;
     }
+    const body = content.body || '';
+    if ($('slideBody').textContent !== body) {
+      let href = null;
+      if (/^https?:\/\/\S+$/i.test(body.trim())) {
+        try { href = new URL(body.trim()).href; } catch { /* Leave incomplete URLs as text while editing. */ }
+      }
+      if (href) {
+        const link = document.createElement('a');
+        link.href = href; link.textContent = body; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        $('slideBody').replaceChildren(link);
+      } else $('slideBody').textContent = body;
+    }
+    $('slideBody').hidden = !body;
     // Keep the same type proportions in both wide and tall presentation windows.
     $('slideContent').style.setProperty('--type-unit', Math.min(rect.width, rect.height * 1.6) / 100 + 'px');
     const authored = !!(label || content.heading || content.body || content.source || hasQr) && !showSample;
