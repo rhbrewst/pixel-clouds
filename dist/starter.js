@@ -34,8 +34,8 @@
       space: { x: 46, y: 49, width: 84, height: 80, rotation: 0 }
     },
     {
-      name: 'Personal example', label: 'PERSONAL EXAMPLE', heading: 'My Tutoring Platform',
-      body: 'A marketplace connecting students with student tutors.\n\nBuilt with AI-assisted coding.\n\nFrom a concept to a working prototype.', source: '', qr: 'accytutor',
+      name: 'Personal example', label: 'PERSONAL EXAMPLE', heading: 'My Tutoring Website',
+      body: 'A website for my own tutoring services.\n\nBuilt with AI-assisted coding.\n\nHelping me find students and earn money tutoring.', source: '', qr: 'accytutor',
       space: { x: 54, y: 50, width: 82, height: 88, rotation: 0 }
     },
     {
