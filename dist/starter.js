@@ -6,7 +6,7 @@
   const slides = [
     {
       name: 'Rethink AI', label: '', heading: 'Rethink AI',
-      body: 'The barrier between an idea and a working product has never been lower.', source: 'Ross Brewster',
+      body: 'Unlock the unique value in AI assisted digital project development.', source: 'Ross Brewster',
       space: { x: 50, y: 50, width: 80, height: 62, rotation: 0 }
     },
     {
