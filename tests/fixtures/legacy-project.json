@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "slides": [
+    {
+      "id": "opening",
+      "name": "Opening",
+      "space": {
+        "x": 50,
+        "y": 48,
+        "width": 81,
+        "height": 51,
+        "rotation": 0
+      }
+    },
+    {
+      "id": "space",
+      "name": "Make space",
+      "space": {
+        "x": 32.5,
+        "y": 51,
+        "width": 57,
+        "height": 72,
+        "rotation": 0
+      }
+    },
+    {
+      "id": "heat",
+      "name": "A new perspective",
+      "space": {
+        "x": 68.5,
+        "y": 48.5,
+        "width": 51,
+        "height": 67,
+        "rotation": 0
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "reshape",
+      "name": "Reshape",
+      "from": 0,
+      "to": 1,
+      "duration": 2.6,
+      "easing": "smooth",
+      "middle": {
+        "x": 41.25,
+        "y": 49.5,
+        "width": 69,
+        "height": 61.5,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 60,
+        "boost": 1,
+        "refinement": 0,
+        "whiteHold": 4,
+        "sweep": 24
+      }
+    },
+    {
+      "id": "reveal",
+      "name": "Clear & reveal",
+      "from": 1,
+      "to": 2,
+      "duration": 2.6,
+      "easing": "smooth",
+      "middle": {
+        "x": 50.5,
+        "y": 49.75,
+        "width": 54,
+        "height": 69.5,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 60,
+        "boost": 4.6,
+        "refinement": 42,
+        "whiteHold": 4,
+        "sweep": 24
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "title": "Cloud study",
+  "slides": [
+    {
+      "id": "opening",
+      "name": "Opening",
+      "space": {
+        "x": 50,
+        "y": 48,
+        "width": 81,
+        "height": 51,
+        "rotation": 0
+      },
+      "content": {
+        "heading": "",
+        "body": ""
+      }
+    },
+    {
+      "id": "space",
+      "name": "Make space",
+      "space": {
+        "x": 32.5,
+        "y": 51,
+        "width": 57,
+        "height": 72,
+        "rotation": 0
+      },
+      "content": {
+        "heading": "",
+        "body": ""
+      }
+    },
+    {
+      "id": "perspective",
+      "name": "A new perspective",
+      "space": {
+        "x": 68.5,
+        "y": 48.5,
+        "width": 51,
+        "height": 67,
+        "rotation": 0
+      },
+      "content": {
+        "heading": "",
+        "body": ""
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "transition-b71e106f-713b-47d7-aebc-6bb19f782a47",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "opening",
+      "to": "space",
+      "duration": 2.6,
+      "easing": "smooth",
+      "middle": {
+        "x": 41.25,
+        "y": 49.5,
+        "width": 69,
+        "height": 61.5,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 60,
+        "boost": 1,
+        "refinement": 0
+      }
+    },
+    {
+      "id": "transition-f846606f-53ad-4ff9-b48b-180dbb271433",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "space",
+      "to": "perspective",
+      "duration": 2.6,
+      "easing": "smooth",
+      "middle": {
+        "x": 50.5,
+        "y": 49.75,
+        "width": 54,
+        "height": 69.5,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 60,
+        "boost": 1,
+        "refinement": 0
+      }
+    }
+  ]
+}

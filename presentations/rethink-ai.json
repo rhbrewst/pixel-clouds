@@ -1,0 +1,353 @@
+{
+  "version": 2,
+  "title": "Rethink AI",
+  "slides": [
+    {
+      "id": "rethink-ai-1",
+      "name": "Rethink AI",
+      "space": {
+        "x": 50,
+        "y": 50,
+        "width": 80,
+        "height": 62,
+        "rotation": 0
+      },
+      "content": {
+        "label": "",
+        "heading": "Rethink AI",
+        "body": "The barrier between an idea and a working product has never been lower.",
+        "source": ""
+      }
+    },
+    {
+      "id": "rethink-ai-2",
+      "name": "The opposition",
+      "space": {
+        "x": 44,
+        "y": 50,
+        "width": 80,
+        "height": 82,
+        "rotation": 0
+      },
+      "content": {
+        "label": "THE OPPOSITION",
+        "heading": "Is AI Making Us Think Less?",
+        "body": "• Academic dishonesty\n• Cognitive dependence\n• Loss of critical thinking",
+        "source": "Bastani et al. (2025), PNAS; UNESCO (2023)"
+      }
+    },
+    {
+      "id": "rethink-ai-3",
+      "name": "The counterargument",
+      "space": {
+        "x": 56,
+        "y": 49,
+        "width": 80,
+        "height": 76,
+        "rotation": 0
+      },
+      "content": {
+        "label": "THE COUNTERARGUMENT",
+        "heading": "Using AI ≠ Creating With AI",
+        "body": "Don't outsource your thinking. Outsource the barriers.",
+        "source": "Y Combinator (2025); UNESCO (2023)"
+      }
+    },
+    {
+      "id": "rethink-ai-4",
+      "name": "The proof",
+      "space": {
+        "x": 50,
+        "y": 51,
+        "width": 86,
+        "height": 86,
+        "rotation": 0
+      },
+      "content": {
+        "label": "THE PROOF",
+        "heading": "This Presentation Was Built With AI",
+        "body": "Not PowerPoint. Not Google Slides.\n\nCode. Creativity. Collaboration.",
+        "source": "Peng et al. (2023), The Impact of AI on Developer Productivity"
+      }
+    },
+    {
+      "id": "rethink-ai-5",
+      "name": "Entrepreneurship",
+      "space": {
+        "x": 46,
+        "y": 49,
+        "width": 84,
+        "height": 80,
+        "rotation": 0
+      },
+      "content": {
+        "label": "ENTREPRENEURSHIP",
+        "heading": "From Idea to Income",
+        "body": "Idea → Prototype → Product → Customer\n\nAI lowers the cost of getting started.",
+        "source": "Karpathy (2025), Software Is Changing (Again)"
+      }
+    },
+    {
+      "id": "rethink-ai-6",
+      "name": "Personal example",
+      "space": {
+        "x": 54,
+        "y": 50,
+        "width": 82,
+        "height": 88,
+        "rotation": 0
+      },
+      "content": {
+        "label": "PERSONAL EXAMPLE",
+        "heading": "My Tutoring Platform",
+        "body": "A marketplace connecting students with student tutors.\n\nBuilt with AI-assisted coding.\n\nFrom a concept to a working prototype.",
+        "source": ""
+      }
+    },
+    {
+      "id": "rethink-ai-7",
+      "name": "Broader applications",
+      "space": {
+        "x": 46,
+        "y": 50,
+        "width": 86,
+        "height": 90,
+        "rotation": 0
+      },
+      "content": {
+        "label": "BROADER APPLICATIONS",
+        "heading": "You Don't Need to Start a Business",
+        "body": "• Build your own study tools.\n• Automate repetitive tasks.\n• Create interactive portfolios.\n• Turn data into useful dashboards.\n\nSolve a problem that matters to you.",
+        "source": ""
+      }
+    },
+    {
+      "id": "rethink-ai-8",
+      "name": "The challenge",
+      "space": {
+        "x": 54,
+        "y": 50,
+        "width": 86,
+        "height": 90,
+        "rotation": 0
+      },
+      "content": {
+        "label": "THE CHALLENGE",
+        "heading": "Your First 30 Minutes",
+        "body": "1. Identify a problem.\n2. Describe your idea to an AI coding assistant.\n3. Build, test, and improve your first prototype.\n\nYou don't need to know how to code to start learning.",
+        "source": ""
+      }
+    },
+    {
+      "id": "rethink-ai-9",
+      "name": "The call to action",
+      "space": {
+        "x": 50,
+        "y": 50,
+        "width": 86,
+        "height": 88,
+        "rotation": 0
+      },
+      "content": {
+        "label": "THE CALL TO ACTION",
+        "heading": "Stop Just Using AI. Start Building.",
+        "body": "One idea. One project. One week.\n\nThe question isn't what AI can do for you.\n\nIt's what you can create with it.",
+        "source": ""
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "transition-740e0809-6e01-4af0-9054-6ca0143c20fd",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-1",
+      "to": "rethink-ai-2",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 47,
+        "y": 50,
+        "width": 80,
+        "height": 72,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-5c3fbacf-0426-4f4d-97f6-fd99b46a4ded",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-2",
+      "to": "rethink-ai-3",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 50,
+        "y": 49.5,
+        "width": 80,
+        "height": 79,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-87ef563d-4be2-475e-a4fb-2934b8233229",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-3",
+      "to": "rethink-ai-4",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 53,
+        "y": 50,
+        "width": 83,
+        "height": 81,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-18647098-f558-49d6-8080-0cb5a42e23d6",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-4",
+      "to": "rethink-ai-5",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 48,
+        "y": 50,
+        "width": 85,
+        "height": 83,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-c1b02558-cc32-498b-b56b-df8d4a77ca5e",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-5",
+      "to": "rethink-ai-6",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 50,
+        "y": 49.5,
+        "width": 83,
+        "height": 84,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-65b02791-e943-4710-beb8-8e4133be27a7",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-6",
+      "to": "rethink-ai-7",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 50,
+        "y": 50,
+        "width": 84,
+        "height": 89,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-6f5951a9-59ee-4013-8305-5cc5c7f3993c",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-7",
+      "to": "rethink-ai-8",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 50,
+        "y": 50,
+        "width": 86,
+        "height": 90,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    },
+    {
+      "id": "transition-8349860d-78db-4694-be81-49765427845f",
+      "name": "Cloud reshape",
+      "kind": "cloud",
+      "from": "rethink-ai-8",
+      "to": "rethink-ai-9",
+      "duration": 2.8,
+      "easing": "smooth",
+      "middle": {
+        "x": 52,
+        "y": 50,
+        "width": 86,
+        "height": 89,
+        "rotation": 0
+      },
+      "motion": {
+        "speed": 1,
+        "size": 22,
+        "ripple": 42,
+        "boost": 1.8,
+        "refinement": 24,
+        "settle": 28
+      }
+    }
+  ]
+}
