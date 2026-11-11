@@ -271,7 +271,7 @@
       $(id).hidden = !value;
     }
     const body = content.body || '';
-    if ($('slideBody').textContent !== body) {
+    if ($('slideBody').dataset.bodySource !== body) {
       let href = null;
       if (/^https?:\/\/\S+$/i.test(body.trim())) {
         try { href = new URL(body.trim()).href; } catch { /* Leave incomplete URLs as text while editing. */ }
@@ -280,7 +280,20 @@
         const link = document.createElement('a');
         link.href = href; link.textContent = body; link.target = '_blank'; link.rel = 'noopener noreferrer';
         $('slideBody').replaceChildren(link);
-      } else $('slideBody').textContent = body;
+      } else {
+        const fragment = document.createDocumentFragment();
+        let cursor = 0;
+        for (const match of body.matchAll(/\*([^*\n]+)\*/g)) {
+          fragment.append(document.createTextNode(body.slice(cursor, match.index)));
+          const emphasis = document.createElement('em');
+          emphasis.textContent = match[1];
+          fragment.append(emphasis);
+          cursor = match.index + match[0].length;
+        }
+        fragment.append(document.createTextNode(body.slice(cursor)));
+        $('slideBody').replaceChildren(fragment);
+      }
+      $('slideBody').dataset.bodySource = body;
     }
     $('slideBody').hidden = !body;
     // Keep the same type proportions in both wide and tall presentation windows.

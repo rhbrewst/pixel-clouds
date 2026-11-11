@@ -6,7 +6,7 @@
   const slides = [
     {
       name: 'Rethink AI', label: '', heading: 'Rethink AI',
-      body: 'The barrier between an idea and a working product has never been lower.', source: '',
+      body: 'The barrier between an idea and a working product has never been lower.', source: 'Ross Brewster',
       space: { x: 50, y: 50, width: 80, height: 62, rotation: 0 }
     },
     {
@@ -28,7 +28,7 @@
       space: { x: 50, y: 51, width: 86, height: 86, rotation: 0 }
     },
     {
-      name: 'Entrepreneurship', label: 'ENTREPRENEURSHIP', heading: 'From Idea to Income',
+      name: 'Entrepreneurship', label: 'ENTREPRENEURSHIP', heading: 'Idea to Income',
       body: 'Idea → Prototype → Product → Customer\n\nAI lowers the cost of getting started.',
       source: 'Karpathy (2025), Software Is Changing (Again)',
       space: { x: 46, y: 49, width: 84, height: 80, rotation: 0 }
@@ -50,7 +50,7 @@
     },
     {
       name: 'The call to action', label: 'THE CALL TO ACTION', heading: 'Stop Just Using AI. Start Building.',
-      body: "One idea. One project. One week.\n\nThe question isn't what AI can do for you.\n\nIt's what you can create with it.", source: '',
+      body: "The question is not what AI can do for you.\n\nIt's what can you do *with* AI.", source: '',
       space: { x: 50, y: 50, width: 86, height: 88, rotation: 0 }
     }
   ];

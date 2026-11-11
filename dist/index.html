@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f7f9">
 <meta name="description" content="Build a presentation with drifting blue pixel clouds. Add, edit, reorder, and delete slides, then shape the motion between them.">
 <title>Pixel Clouds — Presentation Studio</title>
-<link rel="stylesheet" href="editor.css"><script src="model.js" defer></script><script src="starter.js" defer></script><script src="renderer.js" defer></script><script src="editor.js" defer></script>
+<link rel="stylesheet" href="editor.css?v=20261111-copy"><script src="model.js" defer></script><script src="starter.js?v=20261111-copy" defer></script><script src="renderer.js" defer></script><script src="editor.js?v=20261111-copy" defer></script>
 </head>
 <body>
 <header class="app-header">
@@ -86,7 +86,7 @@
 <div class="inspector-divider"></div>
 <div class="field"><label for="labelInput">Section label <span class="optional">optional</span></label><input id="labelInput" type="text" maxlength="100" placeholder="The counterargument" autocomplete="off"><p class="field-help">Appears above the heading.</p></div>
 <div class="field"><label for="headingInput">Heading <span class="optional">optional</span></label><textarea id="headingInput" rows="2" maxlength="160" placeholder="What’s the big idea?"></textarea></div>
-<div class="field"><label for="bodyInput">Body text <span class="optional">optional</span></label><textarea id="bodyInput" rows="4" maxlength="2000" placeholder="Add a little context…"></textarea></div>
+<div class="field"><label for="bodyInput">Body text <span class="optional">optional</span></label><textarea id="bodyInput" rows="4" maxlength="2000" placeholder="Add a little context…" aria-describedby="bodyHelp"></textarea><p id="bodyHelp" class="field-help">Wrap words in *asterisks* for italics.</p></div>
 <div class="field"><label for="sourceInput">Source credit <span class="optional">optional</span></label><textarea id="sourceInput" rows="2" maxlength="500" placeholder="Author, year, publication"></textarea></div>
 <label class="check-field" for="qrToggle"><span>Show AccyTutor QR code</span><input id="qrToggle" type="checkbox"></label>
 <p class="field-help">Text stays upright inside the safe area and appears in Present mode. Leave it empty for a background-only slide.</p>
