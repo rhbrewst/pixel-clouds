@@ -18,6 +18,7 @@ function assertValidSequence(project) {
 test('new presentations have three blue-cloud slides and stable slide references', () => {
   const project = M.createProject();
   assert.equal(project.version, 2); assert.equal(project.slides.length, 3);
+  assert.ok(project.transitions.every(tr => tr.duration === .8));
   assertValidSequence(project);
   assert.ok(project.transitions.every(tr => tr.motion.boost > tr.motion.speed && tr.motion.boost <= 5 && tr.motion.refinement > 0));
 });

@@ -20,7 +20,7 @@ The bundled starter is **Rethink AI**, a nine-slide presentation with the suppli
 
 - Rename the presentation using the name at the top of the sidebar.
 - **Add slide** inserts a new slide after the selected one.
-- Select a slide to edit its name, section label, heading, body text, and source credit in the **Slide** tab. Names organize the sidebar; the remaining fields appear on the slide. Section labels receive the current slide number automatically, including after reordering.
+- Select a slide to edit its name, section label, heading, body text, and source credit in the **Slide** tab. Names organize the sidebar; the remaining fields appear on the slide. Section labels appear above the heading without a slide-number prefix.
 - **Duplicate** copies the selected slide's text and layout into an independent slide.
 - **Move earlier / Move later** reorder the selected slide. Text and whitespace stay attached to it.
 - **Delete slide** removes it and updates neighboring transitions. Use the toast's Undo button or the header's undo/redo controls to recover it.
@@ -34,6 +34,7 @@ The bundled starter is **Rethink AI**, a nine-slide presentation with the suppli
 Click **Cloud reshape** between any two slides, or use **Edit transition** beneath the canvas.
 
 - Replay, pause, scrub, loop, or slow playback. The same timeline position produces the same frame.
+- New transitions and the bundled presentation default to **0.8 seconds**. Timing remains editable; choosing a motion preset applies that preset's duration.
 - Edit **Start**, **Middle**, and **End** whitespace position, width, height, and rotation.
 - Slide endpoints are shared with their neighboring transitions. The midpoint is independent.
 - **Continuous glide** carries the whitespace through the middle keyframe without an automatic pause. Custom reversals still turn smoothly at their waypoint.

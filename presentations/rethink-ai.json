@@ -163,7 +163,7 @@
       "kind": "cloud",
       "from": "rethink-ai-1",
       "to": "rethink-ai-2",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 47,
@@ -187,7 +187,7 @@
       "kind": "cloud",
       "from": "rethink-ai-2",
       "to": "rethink-ai-3",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 50,
@@ -211,7 +211,7 @@
       "kind": "cloud",
       "from": "rethink-ai-3",
       "to": "rethink-ai-4",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 53,
@@ -235,7 +235,7 @@
       "kind": "cloud",
       "from": "rethink-ai-4",
       "to": "rethink-ai-5",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 48,
@@ -259,7 +259,7 @@
       "kind": "cloud",
       "from": "rethink-ai-5",
       "to": "rethink-ai-6",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 50,
@@ -283,7 +283,7 @@
       "kind": "cloud",
       "from": "rethink-ai-6",
       "to": "rethink-ai-7",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 50,
@@ -307,7 +307,7 @@
       "kind": "cloud",
       "from": "rethink-ai-7",
       "to": "rethink-ai-8",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 50,
@@ -331,7 +331,7 @@
       "kind": "cloud",
       "from": "rethink-ai-8",
       "to": "rethink-ai-9",
-      "duration": 2.8,
+      "duration": 0.8,
       "easing": "smooth",
       "middle": {
         "x": 52,

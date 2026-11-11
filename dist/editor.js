@@ -180,8 +180,8 @@
       input.value = value; input.disabled = !tr;
       $(input.id + 'Value').textContent = format(value) + motionUnits[input.dataset.motion];
     });
-    $('duration').value = tr?.duration || 2.6; $('duration').disabled = !tr;
-    $('durationValue').textContent = format(tr?.duration || 2.6) + 's';
+    $('duration').value = tr?.duration || M.defaultDuration; $('duration').disabled = !tr;
+    $('durationValue').textContent = format(tr?.duration || M.defaultDuration) + 's';
     $('totalTime').textContent = (tr?.duration || 0).toFixed(2) + 's';
     $('easing').value = tr?.easing || 'smooth';
     const slideIndex = project.slides.indexOf(slide);
@@ -214,7 +214,7 @@
     const motion = tr?.motion || M.defaultMotion;
     const points = Array.from({length:61}, (_, i) => (i ? 'L' : 'M') + (i*4).toFixed(1) + ' ' + (48-M.motionEnvelope(motion,i/60)*40).toFixed(2));
     $('motionCurve').setAttribute('d', points.join(' '));
-    $('settleHint').textContent = 'The last ' + ((tr?.duration || 2.8) * motion.settle / 100).toFixed(2) + 's gives the movement room to settle.';
+    $('settleHint').textContent = 'The last ' + ((tr?.duration || M.defaultDuration) * motion.settle / 100).toFixed(2) + 's gives the movement room to settle.';
   }
   function chooseSlide(id, tabName = 'slide') {
     commitEdit(); pause(); selectedSlideId = id; mode = 'slide'; anchorSelectedSlide();
@@ -261,7 +261,7 @@
     $('sampleContent').hidden = !showSample; $('sampleContent').style.opacity = visibility;
     $('sampleContent').setAttribute('aria-hidden', String(!showSample || visibility < .1));
     const content = contentSlide?.content || {};
-    const label = content.label ? 'SLIDE ' + pad(project.slides.indexOf(contentSlide) + 1) + ' — ' + content.label : '';
+    const label = content.label || '';
     for (const [id, value] of [['slideLabel', label], ['slideHeading', content.heading], ['slideBody', content.body], ['slideSource', content.source]]) {
       if ($(id).textContent !== (value || '')) $(id).textContent = value || '';
       $(id).hidden = !value;

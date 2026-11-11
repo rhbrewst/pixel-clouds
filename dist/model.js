@@ -8,6 +8,7 @@
   const motionBounds = { speed: [.2, 5], size: [10, 38], ripple: [0, 100], boost: [.2, 5], refinement: [0, 60], settle: [10, 45] };
   const spaceBounds = { x: [5, 95], y: [5, 95], width: [20, 100], height: [20, 100], rotation: [-180, 180] };
   const defaultSpace = { x: 50, y: 50, width: 65, height: 65, rotation: 0 };
+  const defaultDuration = .8;
   const defaultMotion = { speed: 1, size: 22, ripple: 42, boost: 1.8, refinement: 24, settle: 28 };
   const motionPresets = {
     calm: { label: 'Float', duration: 3.6, speed: .7, boost: 1.2, ripple: 30, refinement: 14, settle: 36 },
@@ -31,7 +32,7 @@
   function createTransition(from, to) {
     return {
       id: newId('transition'), name: 'Cloud reshape', kind: 'cloud', from: from.id, to: to.id,
-      duration: 2.8, easing: 'smooth',
+      duration: defaultDuration, easing: 'smooth',
       middle: Object.fromEntries(spaceKeys.map(key => [key, (from.space[key] + to.space[key]) / 2])),
       motion: clone(defaultMotion)
     };
@@ -224,7 +225,7 @@
     if (new Set(transitions.map(tr => tr.id)).size !== transitions.length) throw new Error('Each transition must have a unique ID.');
     return { version: 2, title: legacy ? 'Cloud study' : text(input.title, 120, false), slides, transitions };
   }
-  const api = { motionPresets, applyMotionPreset, motionPhases, motionEnvelope, sampleMotion, slideRestStyle, contentOpacity, MAX_SLIDES, createProject, createSlide, createTransition, reconcileTransitions, insertSlide, duplicateSlide, deleteSlide, moveSlide, findSlide, defaultSpace, defaultMotion, clone, clamp, mix, spaceKeys, motionBounds, getSpace, sampleSpace, sampleTime, driftIntegral, safeBox, validateProject };
+  const api = { motionPresets, applyMotionPreset, motionPhases, motionEnvelope, sampleMotion, slideRestStyle, contentOpacity, MAX_SLIDES, createProject, createSlide, createTransition, reconcileTransitions, insertSlide, duplicateSlide, deleteSlide, moveSlide, findSlide, defaultSpace, defaultDuration, defaultMotion, clone, clamp, mix, spaceKeys, motionBounds, getSpace, sampleSpace, sampleTime, driftIntegral, safeBox, validateProject };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PixelCloudModel = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
