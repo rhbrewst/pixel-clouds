@@ -6,7 +6,7 @@
   const slides = [
     {
       name: 'Rethink AI', label: '', heading: 'Rethink AI',
-      body: 'https://youtu.be/Z9k5oI3Paoc?is=njxnLUQUWkMqKTjI', source: '',
+      body: 'The barrier between an idea and a working product has never been lower.', source: '',
       space: { x: 50, y: 50, width: 80, height: 62, rotation: 0 }
     },
     {
